@@ -38,20 +38,20 @@
 import Link from "next/link";
 import { Trash2, Edit } from "lucide-react"; // dashboard icons
 import Removebtn from "./removebtn";
+
 const getTopics = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/topics`, {
+    const res = await fetch("http://localhost:3000/api/topics", {
       cache: "no-store",
     });
-
-    if (!res.ok) throw new Error("Failed to fetch topics");
+    if (!res.ok) {
+      throw new Error("Failed to fetch topics");
+    }
     return res.json();
-  } catch (err) {
-    console.error("Error loading topics:", err);
-    return { topics: [] };
+  } catch (error) {
+    console.error("Error fetching topics:", error);
   }
 };
-
 export default async function TopicList() {
   const { topics } = await getTopics();
 
@@ -60,8 +60,8 @@ export default async function TopicList() {
       {/* Dashboard header */}
       <header className="flex items-center justify-between mb-8">
         <h1 className="text-2xl font-semibold text-gray-800">All Topics</h1>
-        <Link href="/AddExp" className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-xl hover:bg-blue-700 transition">
-          + New Topic
+        <Link href="/AddExp" className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-xl hover:bg-blue-700 transition">
+          + Track Expense
         </Link>
       </header>
 
