@@ -38,10 +38,11 @@
 import Link from "next/link";
 import { Trash2, Edit } from "lucide-react"; // dashboard icons
 import Removebtn from "./removebtn";
+const baseUrl = process.env.NODE_ENV === "production" ? process.env.NEXT_PUBLIC_BASE_URL : "http://localhost:3000";
 
 const getTopics = async () => {
   try {
-    const res = await fetch("http://localhost:3000/api/topics", {
+    const res = await fetch(`${baseUrl}/api/topics`, {
       cache: "no-store",
     });
     if (!res.ok) {
