@@ -9,12 +9,13 @@ export default function AddButton() {
   const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const baseUrl = process.env.NODE_ENV === "production" ? process.env.NEXT_PUBLIC_BASE_URL : "http://localhost:3000";
 
     if (!title || !description || !category) {
       alert("Title and description are required");
     }
     try {
-      const res = await fetch("/api/topics", {
+      const res = await fetch(`${baseUrl}/api/topics`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
