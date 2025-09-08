@@ -1,17 +1,23 @@
 import EditTopicform from "@/components/EditTopicform";
-const getTopic = async (id) => {
+const baseUrl = process.env.NODE_ENV === "production" ? process.env.NEXT_PUBLIC_BASE_URL : "http://localhost:3000";
+
+async function getTopic(id) {
   try {
-    const res = await fetch(`http://localhost:3000/api/topics/${id}`, {
+    const res = await fetch(`${baseUrl}/api/topics/${id}`, {
       cache: "no-store",
     });
+
     if (!res.ok) {
-      throw new Error("Failed to fetch topic");
+      throw new Error(`Failed to fetch topic. Status: ${res.status}`);
     }
-    return res.json();
+
+    return await res.json();
   } catch (error) {
-    console.error("Error fetching topic:", error);
+    console.error("Error fetching topic:", error.message);
+    return null; // so component won’t break
   }
-};
+}
+
 export default async function EditTopic({ params }) {
   const { id } = params;
   const { topic } = await getTopic(id);
